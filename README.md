@@ -4,6 +4,13 @@
   An end-to-end Machine Learning pipeline to predict customer churn using an optimized <b>LightGBM</b> model with dynamic feature selection, deployed via a highly interactive <b>Streamlit</b> web application.
 </p>
 
+<div align="center">
+  <a href="https://customer-churn-prediction-app-abdelazizelbanna.streamlit.app/" target="_blank">
+    <img src="https://img.shields.io/badge/🔴_Live_Demo-Access_App_Here-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Live Demo" />
+  </a>
+</div>
+<br>
+
 ---
 
 ## 🛠️ Tech Stack & Tools
