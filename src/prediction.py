@@ -2,33 +2,34 @@ import joblib
 import os
 import pandas as pd
 
-# Define absolute path to load the saved Random Forest model
+# Define absolute path to load the saved LightGBM model
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(BASE_DIR, '../models/RandomForest.pkl')
+MODEL_PATH = os.path.join(BASE_DIR, '../models/LGBMClassifier.pkl')
 
-# Load the model once when the script runs (Fast for Streamlit)
+# Load the model
 try:
-    rf_model = joblib.load(MODEL_PATH)
+    lgbm_model = joblib.load(MODEL_PATH)
 except Exception as e:
-    raise FileNotFoundError(f"Could not load the model. Ensure RandomForest.pkl exists. Error: {e}")
+    raise FileNotFoundError(f"Could not load the model. Ensure LGBMClassifier.pkl exists. Error: {e}")
 
 def predict_churn(processed_df: pd.DataFrame) -> dict:
     """
-    Takes the preprocessed DataFrame and returns the churn prediction.
-    
-    Args:
-        processed_df (pd.DataFrame): The single-row dataframe output from preprocess_data().
-        
-    Returns:
-        dict: A dictionary containing the prediction (0 or 1) and the probability.
+    Takes the preprocessed DataFrame, dynamically selects the RFECV features, 
+    and returns the churn prediction.
     """
-    # Get the prediction (0 for Not Churn, 1 for Churn)
-    prediction = rf_model.predict(processed_df)[0]
+    # Get the exact features the LightGBM model was trained on
+    expected_features = lgbm_model.feature_name_
     
-    # Get the probability of churn (Class 1 probability)
-    probability = rf_model.predict_proba(processed_df)[0][1]
+    # --- THE FIX: Replace spaces with underscores in the columns ---
+    processed_df.columns = processed_df.columns.str.replace(' ', '_')
     
-    # Return as a clean dictionary so Streamlit can easily display it
+    # Filter the processed dataframe to keep ONLY those features
+    final_df = processed_df[expected_features]
+    
+    # Get the prediction and probability
+    prediction = lgbm_model.predict(final_df)[0]
+    probability = lgbm_model.predict_proba(final_df)[0][1]
+    
     return {
         "prediction": int(prediction),
         "churn_probability": float(probability),
