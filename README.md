@@ -111,3 +111,73 @@ customer-churn-prediction-app/
 ├── .gitignore
 ├── README.md
 └── requirements.txt                # Project dependencies
+```
+## 🚀 Setup & Installation Guide
+
+Follow these steps to run the project locally on your machine:
+
+---
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/AbdelazizElbanna/customer-churn-prediction-app.git
+cd customer-churn-prediction-app
+```
+
+---
+
+### 2️⃣ Create & Activate Virtual Environment (Recommended)
+
+```bash
+python -m venv venv
+```
+
+**Windows:**
+
+```bash
+venv\Scripts\activate
+```
+
+**Mac/Linux:**
+
+```bash
+source venv/bin/activate
+```
+
+---
+
+### 3️⃣ Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+### 4️⃣ Run the Application
+
+```bash
+streamlit run app/app.py
+```
+
+---
+
+### 🌐 Access the App
+
+After running the app, it will be available at:
+
+```text
+http://localhost:8501
+```
+
+---
+
+## 📌 Notes
+
+* Make sure you have Python installed (>= 3.8 recommended)
+* Update pip if needed:
+
+```bash
+pip install --upgrade pip
+```
