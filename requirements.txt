@@ -1,19 +1,9 @@
-# Core
-numpy
+streamlit
 pandas
-
-# Visualization (EDA)
+scikit-learn
+lightgbm
+joblib
+numpy
 matplotlib
 seaborn
-
-# Machine Learning
-scikit-learn
-
-# Model Saving
-joblib
-
-# App
-streamlit
-
-# Optional (useful)
 scipy
