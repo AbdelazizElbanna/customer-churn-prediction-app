@@ -1,0 +1,19 @@
+# Core
+numpy
+pandas
+
+# Visualization (EDA)
+matplotlib
+seaborn
+
+# Machine Learning
+scikit-learn
+
+# Model Saving
+joblib
+
+# App
+streamlit
+
+# Optional (useful)
+scipy
