@@ -12,7 +12,6 @@
 <br>
 
 ---
----
 
 ## 🛠️ Tech Stack & Tools
 
@@ -46,8 +45,7 @@ Click on any icon below to visit the official documentation:
 The application follows a highly modular, decoupled architecture, separating the User Interface, Data Processing, and Model Inference to ensure scalability and maintainability:
 
 1. **User Interface (`app/app.py`):** Built with Streamlit, it captures customer data and sends it as a raw dictionary to the backend.
-2. **Data Preprocessing (`src/preprocessing.py`):** 
-   - Loads the pre-trained `scaler.pkl` and `encoder.pkl`.
+2. **Data Preprocessing (`src/preprocessing.py`):** - Loads the pre-trained `scaler.pkl` and `encoder.pkl`.
    - Cleans the raw input, applies One-Hot Encoding, Standard Scaling, and ensures exact column mapping and data-type casting (`int8` memory optimization).
 3. **Model Prediction (`src/prediction.py`):**
    - Implements **Dynamic Feature Selection**: Automatically reads the `feature_name_` attribute from the loaded LightGBM model to filter out discarded features.
@@ -76,7 +74,22 @@ During the EDA phase, we discovered that customer churn in this dataset isn't li
 
 ## 🤖 Modeling & Evaluation
 
-Initially, a baseline `RandomForestClassifier` was trained, yielding excellent results. However, to optimize for **production speed** and reduce noise, we migrated to a **Light Gradient Boosting Machine (LightGBM)**.
+Initially, a baseline `LogisticRegression` and `RandomForestClassifier` were trained. However, to optimize for **production speed** and reduce noise, we ultimately migrated to a **Light Gradient Boosting Machine (LightGBM)**.
+
+### 📈 Model Performance Benchmark
+
+During the evaluation phase, tree-based models significantly outperformed linear models due to their natural ability to capture the sharp, non-linear thresholds discovered during EDA.
+
+| Model | Feature Set | Accuracy | F1 Score (Churn) | Key Observations |
+|-------|-------------|----------|------------------|------------------|
+| **Logistic Regression** | Original Features | *[85 %]* | *[86 %]* | Struggled to capture non-linear behavioral thresholds. |
+| **Logistic Regression** | Engineered Thresholds | *[91 %]* | *[92 %]* | Slight improvement from engineered binary flags, but still underperformed. |
+| **Random Forest** | Original Features | *[93.74 %]* | *[94.66 %]* | Exceptional accuracy and lowest False Negatives, but heavy memory footprint. |
+| **XGBoost** | Original Features | *[93.48 %]* | *[94.43 %]* | High performance, but slower training time. |
+| **LightGBM** | Original Features | *[94 %]* | *[94.55 %]* | Matched RF performance with significantly faster inference. |
+| **🏆 LightGBM (Final)** | **RFECV Selected** | **~96.6%** | **~97.1%** | **Optimal balance of speed, lightweight size, and high recall for production deployment.** |
+
+*(Note: The exact percentages for the preliminary models can be found in the notebook execution logs).*
 
 ### Model Optimization Pipeline:
 1. **Handling Imbalance:** Applied `scale_pos_weight` dynamically based on class distribution.
