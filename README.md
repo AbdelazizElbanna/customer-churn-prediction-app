@@ -111,7 +111,7 @@ The project adheres to a clean, production-ready structure:
 ```text
 customer-churn-prediction-app/
 ├── app/
-│   └── app.py                      # Main Streamlit UI script
+│   └── streamlit_app.py            # Main Streamlit UI script
 ├── data/
 │   ├── cleaned/                    # Processed datasets
 │   └── raw/                        # Original raw datasets
@@ -120,12 +120,15 @@ customer-churn-prediction-app/
 │   ├── LGBMClassifier.pkl          # Final tuned LightGBM Model
 │   └── scaler.pkl                  # Fitted Standard Scaler
 ├── notebooks/
-│   ├── Cleaning_eda_insights.ipynb # Data cleaning & visualization
+│   ├── cleaning_eda_insights.ipynb # Data cleaning & visualization
 │   └── preprocessing_modeling.ipynb# Feature selection & training
 ├── reports/
-│   └── figures/                    # Saved EDA & Evaluation plots
-│       ├── eda/
-│       └── evaluation/
+│   ├── figures/                    # Saved EDA & Evaluation plots
+│   │   ├── eda/
+│   │   └── evaluation/
+│   ├── presentation/               # Project presentation slides
+│   │   └── Customer-Churn-Predictio...
+│   └── app_docs.md                 # Application documentation
 ├── src/
 │   ├── prediction.py               # Inference logic & dynamic feature mapping
 │   └── preprocessing.py            # Data transformation pipeline
